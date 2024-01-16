@@ -1,0 +1,4 @@
+services:
+  mybot:
+    image: tgimage
+    restart: always
