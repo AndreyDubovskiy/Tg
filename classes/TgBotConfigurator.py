@@ -1,3 +1,5 @@
+import sys
+
 from telebot.async_telebot import AsyncTeleBot
 from telebot import types
 import pickle
@@ -446,7 +448,13 @@ class TgBotConfigurator:
                                                     "session_name"] + ":")
                     self.user_dates[self.id_admin] = {"prev_command": "enter_code", "bot_index": bot_index}
 
+    async def try_start_polling(self):
+        try:
+            await self.bot.polling()
+        except Exception as ex:
+            sys.exit(1)
+
     def start(self):
-        self.loop.create_task(self.bot.polling())
+        self.loop.create_task(self.try_start_polling())
         self.loop.create_task(self.wait_tasks())
         print("STARTED TG")
